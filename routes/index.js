@@ -15,7 +15,7 @@ var token;
 
 // Authorization uri definition
 var authorization_uri = oauth2.authCode.authorizeURL({
-  redirect_uri: 'http://localhost:3000/callback',
+  redirect_uri: 'https://rocky-bayou-5329.herokuapp.com/',
   scope: '',
   state: ''
 });
@@ -38,7 +38,7 @@ router.get('/callback', function (req, res) {
   var code = req.query.code;
   oauth2.authCode.getToken({
     code: code,
-    redirect_uri: 'http://localhost:3000/callback'
+    redirect_uri: 'https://rocky-bayou-5329.herokuapp.com/'
   }, saveToken);
 
   function saveToken(error, result) {
