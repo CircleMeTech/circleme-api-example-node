@@ -55,7 +55,7 @@ router.get('/me', function (req, res) {
   // Set up the request
   var options = {
       host: 'api.circleme.com',
-      path: '/v201410/me.json?access_token='+token.token.access_token,
+      path: '/v201410/me.json?access_token='+req.session.token.token.access_token,
       method: 'GET'
   };
   
@@ -80,7 +80,6 @@ router.get('/me', function (req, res) {
 
 router.get('/likes', function (req, res) {
 	var likes;
-  console.log(req.session)
   // Set up the request
   var options = {
       host: 'api.circleme.com',
@@ -89,7 +88,7 @@ router.get('/likes', function (req, res) {
   };
   
   http.get(options, function(httpRes) {
-  console.log("Got response: " + httpRes.statusCode);
+    console.log("Got response: " + httpRes.statusCode);
 
     var data = '';
 
@@ -100,6 +99,34 @@ router.get('/likes', function (req, res) {
     httpRes.on('end',function(){
       var likes = JSON.parse(data);
       res.render('likes', { title: 'Likes',likes: likes });
+    })
+  }).on('error',function(e){
+     console.log("Error: " + e.message); 
+     console.log( e.stack );
+  });
+});
+
+router.get('/todos', function (req, res) {
+  var todos;
+  // Set up the request
+  var options = {
+      host: 'api.circleme.com',
+      path: '/v201410/tobedone.json?access_token='+req.session.token.token.access_token,
+      method: 'GET'
+  };
+  
+  http.get(options, function(httpRes) {
+    console.log("Got response: " + httpRes.statusCode);
+
+    var data = '';
+
+    httpRes.on('data', function (chunk){
+        data += chunk;
+    });
+
+    httpRes.on('end',function(){
+      var todos = JSON.parse(data);
+      res.render('likes', { title: 'Todos',likes: todos });
     })
   }).on('error',function(e){
      console.log("Error: " + e.message); 
