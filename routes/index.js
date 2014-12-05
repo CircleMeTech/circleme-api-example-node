@@ -6,12 +6,10 @@ var http = require('http');
 var oauth2 = require('simple-oauth2')({
   clientID: 'c136e939911f2336a54aa3d32c22dd27cea7f39585fd1332bb1c9632144d96d3',
   clientSecret: 'cd2f661175f4b07bf247f11c65b5eebb40d52660f15aee0c4f767ac1378dd5a3',
-  site: 'https://api.circleme.com',
+  site: 'https://www.circleme.com',
   authorizationPath: '/oauth/authorize',
   tokenPath: '/oauth/token'
 });
-
-var token;
 
 // Authorization uri definition
 var authorization_uri = oauth2.authCode.authorizeURL({
@@ -45,7 +43,8 @@ router.get('/callback', function (req, res) {
     if (error) { 
       console.log('Access Token Error', error.message); 
     }
-    token = oauth2.accessToken.create(result);
+    req.session.token = oauth2.accessToken.create(result);
+    req.session.save();
   }
   res.redirect('/home');
 });
@@ -85,7 +84,7 @@ router.get('/likes', function (req, res) {
   // Set up the request
   var options = {
       host: 'api.circleme.com',
-      path: '/v201410/liked.json?access_token='+token.token.access_token,
+      path: '/v201410/liked.json?access_token='+req.session.token.token.access_token,
       method: 'GET'
   };
   
