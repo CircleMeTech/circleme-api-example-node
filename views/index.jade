@@ -1,5 +1,13 @@
 extends layout
 
 block content
+  img(src="http://pcdn1.circleme.com/assets/logos/logo_round-06c38981fcab20a91b87a5d946692744.png" class="logo")
   h1= title
-  p Welcome to #{title}
+  if links
+    li 
+      a(href='/me') Profile
+    li 
+      a(href='/likes') Likes
+  else
+    li 
+      a(href='/auth') Get Access Token

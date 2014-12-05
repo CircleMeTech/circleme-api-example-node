@@ -1,8 +1,18 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #e9e9e9;
+  color: #7a7b7b;
 }
 
 a {
-  color: #00B7FF;
+  color: #33b5e5;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  width: 200px;
 }
