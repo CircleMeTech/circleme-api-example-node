@@ -80,7 +80,7 @@ router.get('/me', function (req, res) {
 
 router.get('/likes', function (req, res) {
 	var likes;
-
+  console.log(req.session)
   // Set up the request
   var options = {
       host: 'api.circleme.com',
