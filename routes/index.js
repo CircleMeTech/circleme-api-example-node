@@ -20,7 +20,11 @@ var authorization_uri = oauth2.authCode.authorizeURL({
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'CircleMe Node Test App - Authorize' });
+  if (req.session.token) {
+    res.render('index', { title: 'CircleMe Node Test App', links: true });
+  } else {
+    res.render('index', { title: 'CircleMe Node Test App - Authorize' });
+  }
 });
 router.get('/home', function(req, res) {
   res.render('index', { title: 'CircleMe Node Test App', links: true });
